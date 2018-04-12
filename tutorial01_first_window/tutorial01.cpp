@@ -13,6 +13,14 @@ GLFWwindow* window;
 #include <glm/glm.hpp>
 using namespace glm;
 
+int print(int a) {
+	printf("window is closed!\n");
+	return 0;
+}
+
+
+
+
 int main( void )
 {
 	// Initialise GLFW
@@ -23,8 +31,8 @@ int main( void )
 		return -1;
 	}
 
-	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_SAMPLES, 4);	//4x 抗混叠
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);	//OpenGL 3.3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -37,8 +45,9 @@ int main( void )
 		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(window);
-
+	glfwMakeContextCurrent(window);		//类似于获取窗口焦点
+	auto *pf = print;
+	pf(1);
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW\n");
@@ -66,7 +75,7 @@ int main( void )
 
 	} // Check if the ESC key was pressed or the window was closed
 	while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
-		   glfwWindowShouldClose(window) == 0 );
+		   glfwWindowShouldClose(window) == 0 );//后半段是点击生成窗口上的X，也能关闭该窗口
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
